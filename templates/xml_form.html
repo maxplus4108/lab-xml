@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Форма ввода данных</h1>
+    
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}  <!-- Генерация токена CSRF для защиты от подделки запросов -->
+
+            <div>
+                <label for="id_name">Имя:</label>
+                {{ form.name }}
+            </div>
+
+            <div>
+                <label for="id_age">Возраст:</label>
+                {{ form.age }}
+            </div>
+
+            <div>
+                <label for="id_email">Email:</label>
+                {{ form.email }}
+            </div>
+
+            <div>
+                <label for="id_what_sells">Что продает?</label> <!-- Новая метка для поля -->
+                {{ form.what_sells }} <!-- Поле формы для "Что продает?" -->
+            </div>
+
+            <button type="submit">Отправить</button>
+        </form>
+
+        <!-- Кнопка для перехода к таблице данных -->
+        <div class="btn-container">
+            <a href="{% url 'display_xml_data' %}">
+                <button>Перейти к таблице данных</button>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

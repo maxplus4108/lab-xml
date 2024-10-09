@@ -1,0 +1,33 @@
+services:
+  django:
+    # Сборка образа для сервиса django из текущей директории
+    build: .
+    # Задание имени контейнера для сервиса django
+    container_name: django1
+    # Задание команды, которую нужно запустить при запуске контейнера для сервиса django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app
+    # Открытие порта на хостовой машине и перенаправление на порт в контейнере
+    ports:
+      - 8000:8000
+    # Зависимость от другого сервиса
+    depends_on:
+      - pgdb
+
+  pgdb:
+    # Использование готового образа postgres
+    image: postgres
+    # Задание переменных окружения для контейнера с postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+     # Задание имени контейнера для сервиса pgdb
+    container_name: pgdb1
+     # Связывание тома с директорией в контейнере для сохранения данных postgres
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data/
+
+volumes:
+  pgdbdata: null

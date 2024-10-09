@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скачать и Загрузить XML</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        a, form {
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+        }
+
+        .error, .success {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #dc3545;
+            background-color: #f8d7da;
+        }
+
+        .success {
+            color: #28a745;
+            background-color: #d4edda;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Скачать и Загрузить XML файл</h1>
+    
+    <div class="container">
+        <!-- Скачивание XML файла -->
+        <form method="GET" action="">
+            <button type="submit" name="download">Скачать XML файл</button>
+        </form>
+
+        <hr>
+
+        <!-- Загрузка XML файла -->
+        <h2>Загрузить XML файл</h2>
+        
+        <!-- Отображение ошибок, если они есть -->
+        {% if errors %}
+            <div class="error">
+                <p>Обнаружены ошибки:</p>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        <!-- Отображение сообщения об успехе -->
+        {% if success_message %}
+            <div class="success">
+                <p>{{ success_message }}</p>
+            </div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <input type="file" name="upload" accept=".xml" required>
+            <button type="submit">Загрузить XML файл</button>
+        </form>
+
+        <!-- Кнопки для навигации -->
+        <div class="btn-container">
+            <a href="{% url 'xml_form' %}">
+                <button>Вернуться к форме</button>
+            </a>
+            <a href="{% url 'display_xml_data' %}">
+                <button>Перейти к таблице данных</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
